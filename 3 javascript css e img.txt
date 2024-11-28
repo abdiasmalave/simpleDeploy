@@ -1,0 +1,35 @@
+
+1. agregar archivos.
+
+    crear: static/js/login.js
+
+    crear: static/css/style.css
+
+    copiar imagen a: static/img/imagen1.png
+
+
+
+2. Modificar: login/settings.py
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [BASE_DIR / 'static']
+
+
+3. Agregar JavaScript, css e imágenes al template: app/templates/login.html 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <title>My Django App</title>
+</head>
+<body>
+    <img src="{% static 'img/imagen1.png' %}" alt="Your picture" class="profile-picture">
+    <h1>Hola, Django con JavaScript!</h1>
+
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+</html>
+

@@ -1,0 +1,27 @@
+# #############################
+# ###   CREAR REPOSITORIO   ###
+# #############################
+
+git init
+
+git add .
+
+git commit -m "Primer commit"
+
+git status
+
+git remote add origin https://github.com/abdiasmalave/simpleDeploy.git
+
+git push -u origin main
+
+
+
+# ###########################
+# ###   AGREGAR CAMBIOS   ###
+# ###########################
+
+git add .
+
+git commit -m "Tabla tareas agregada al modelo."
+
+git push

@@ -1,0 +1,34 @@
+
+agregar la app al proyecto en: login/settings.py
+
+Agg y/o modificar estas secciones en: login/settings.py
+
+    import os
+
+    STATIC_URL = '/static/'
+    
+    if DEBUG:
+        STATICFILES_DIRS = [BASE_DIR / 'static']
+
+    if not DEBUG:
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+
+
+crear una vista para la app en: app/views.py
+
+crer un template para la vista de la app en: app/templates/login.html
+
+crear urls de la app en: app/urls.py
+
+agregar las urls de la app a las urls del proyecto en: login/urls.py
+
+listo, probar...
+
+
+
+.\venv\Scripts\activate
+python manage.py check
+python manage.py runserver
