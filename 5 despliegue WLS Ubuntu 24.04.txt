@@ -1,0 +1,122 @@
+# #############################
+# ###   INSTALAR apache2    ###
+# #############################
+
+sudo apt update && apt upgrade
+sudo apt install apache2 libapache2-mod-wsgi-py3
+sudo apt install python3-pip python3-dev python3.12-venv
+
+sudo a2enmod wsgi
+sudo a2query -m
+
+ 
+
+# ###############################
+# ###   CONFIGURAR MariaDB    ###
+# ###############################
+
+Siga las instrucciones del archivo: Instalar y configurar MariaDB.txt
+
+
+
+# ##################################
+# ###   INSTALAR git y github    ###
+# ##################################
+
+Siga las instrucciones del archivo: Instalar y configurar git y github.txt
+
+
+
+# ###############################
+# ###   CLONAR REPOSITORIO    ###
+# ###############################
+
+cd /
+
+git clone https://github.com/abdiasmalave/simpleDeploy.git
+NOTA: pide la passphrase de su clave SSH.
+
+
+
+# ############################
+# ###   ENTORNO VIRTUAL    ###
+# ############################
+
+cd /simpleDeploy
+
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+pip3 install mysqlclient
+
+pip list
+pip freeze
+
+
+
+# #####################################
+# ###   EDITAR login/settings.py    ###
+# #####################################
+
+1. Agregar y/o modificar en login/settings.py
+
+    DEBUG = False
+    ALLOWED_HOSTS = ['localhost','127.0.0.1']
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'logindb',
+            'USER':'tu_usuario',
+            'PASSWORD':'tu_contraseña',
+            'HOST':'localhost',
+            'PORT':'3306',
+        }
+    }   
+
+
+
+# ###############################
+# ###   CONFIGURAR APACHE2    ###
+# ###############################
+
+1. Agregar al final de /etc/apache2/apache2.conf
+
+    WSGIScriptAlias / /simpleDeploy/login/wsgi.py
+    WSGIPythonHome /simpleDeploy/venv
+    WSGIPythonPath /simpleDeploy
+
+    <Directory /simpleDeploy/login/>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    Alias /static/ /simpleDeploy/static/
+    <Directory /simpleDeploy/static/>
+        Require all granted
+    </Directory>
+
+2. Permisología.
+
+    chown -R www-data:www-data /simpleDeploy
+    cd /simpleDeploy/login/
+    chmod +x wsgi.py
+    service apache2 restart
+
+
+
+# #############################
+# ###   AJUSTES & DEPLOY    ###
+# #############################
+
+python3 manage.py check
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+python3 manage.py createsuperuser
+python3 manage.py collectstatic
+
+service apache2 restart
+
+listo...

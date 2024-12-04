@@ -1,0 +1,37 @@
+# #########################
+# ###   Instalar Git    ###
+# #########################
+
+apt install git
+
+git config --global user.name abdiasmalave
+git config --global user.email abdiasmalave@gmail.com
+git config --global init.defaultBranch main
+git config --list
+
+
+# #########################################
+# ###   Crear claves SSH para github    ###
+# #########################################
+
+1. Verificar si ya existe alguna clave de estas: id_rsa.pub, id_ecdsa.pub, id_ed25519.pub.
+    ls -al ~/.ssh
+    FUENTE: https://docs.github.com/es/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys?platform=linux
+
+
+2. Generar un nuevo par de claves SSH.
+    ssh-keygen -t rsa -b 4096 -C "abdiasmalave@gmail.com"
+
+    NOTA: utiliza tu correo y en "passphrase" la contraseña de github.com
+    NOTA: no olvide la "passphrase"
+    FUENTE: https://docs.github.com/es/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+
+3. Agregar la clave publica a github.com
+    cat ~/.ssh/id_rsa.pub
+    Copie toda la clave. Comienza con ssh-rsa y termina con su correo.
+
+    Pegar la clave en:
+    Menu -> Settings -> SSH and GPG keys -> New SSH key
+    LINK: https://github.com/settings/keys
+

@@ -1,0 +1,50 @@
+
+sudo apt install mariadb-server
+sudo apt install python3-mysqldb libmariadb-dev libmariadb-dev-compat
+
+service mariadb start
+
+
+# #################################
+# ###   Configurar mariadb      ###
+# #################################
+
+service mariadb start
+
+1. Modificar usuario root de MariaDB.
+    su -
+    service mariadb start
+    mariadb
+        show databases;
+        use mysql;
+        update user set plugin='' where user='root';
+        alter user root@localhost identified by 'tu_passwd';
+        flush privileges;
+        exit
+    exit
+
+2. Ya se puede conectar con el usuario root de MariaDB sin ser root del equipo.
+    mysql -u root -p
+	    create database logindb;
+	    exit;
+
+
+
+#############################################
+#####	RECUPERAR ACCESO A MARIADB	    #####
+#############################################
+
+NOTA: si olvida su contraseña de root o simplemente desea cambiarla...
+NOTA: ejecute el script de configuración de seguridad de MySQL/MariaDB.
+
+    service mariadb start
+	su -
+	mysql_secure_installation
+
+Enter current password for root (enter for none): -- contraseña root del equipo.
+Switch to unix_socket authentication [Y/n]: n
+Change the root password? [Y/n]: Y		  -- contraseña para el root de MariaDB.
+Remove anonymous users? [Y/n]: Y
+Disallow root login remotely? [Y/n]: Y
+Remove test database and access to it? [Y/n]: n
+Reload privilege tables now? [Y/n]: Y
